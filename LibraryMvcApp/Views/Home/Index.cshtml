@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container-fluid">
+    <div class=" row jumbotron jumbotron-fluid d-flex align-items-stretch mb-5">
+
+        <div class="row">
+            <br />
+            <div class="col-lg-7 container p-5  bg-info">
+                <h1 class="display-3 d-flex justify-content-center pt-5">Låna böcker gratis</h1>
+                <h2 class="display-4 d-flex justify-content-center">hos E-library!</h2>
+                <p class="p-3">
+                    På E-library kan du bläddra bland tusentals* böcker och låna så mycket du vill! Vi strävar efter en så bibliotekslik
+                    miljö som möjligt och har därför begränsat lånen till en kund i taget, allt för en genuin och rustik känsla. Låna böcker, som förr, med E-library!<br /><br /><span class="small"> * Sen återlämning kommer med en förseningsavgift</span>
+                <p class="d-flex justify-content-center align-items-end"> <a class="btn btn-primary p-3" asp-area="Identity" asp-page="/Account/Register">Skapa ett gratiskonto idag!</a></p><br />
+            </div>
+            
+                <img class="h-auto col-lg-5 d-flex" src="~/Images/pexels-perfecto-capucine-515848-1329571.jpg" alt="Phone with books">
+            
+        </div>
+    </div>
+
+
+    <div class="container marketing">
+
+
+        <div class="d-flex justify-content-center flex-column align-items-center p-4">
+            <h6>Kom igång med</h6>
+            <h1>E-library</h1>
+            </div>
+        <div class="">
+            <div class="row pt-5 pb-5 d-flex justify-content-around">
+                <div class="col-lg-4 d-flex justify-content-center">
+                    <div class="gradient1 bg-secondary w-50 d-flex justify-content-center flex-column align-items-center p-3">
+                    <img class="rounded-circle pb-2" src="~/Images/pngtree-one-line-drawing-of-isolated-vector-object-open-book-with-flying-png-image_1729235.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <h4>Låna</h4>
+                        </div>
+                     </div>
+                <div class="col-lg-4  d-flex justify-content-center">
+                    <div class="gradient2 bg-secondary w-50 d-flex justify-content-center flex-column align-items-center p-3">
+                        <img class="rounded-circle pb-2" src="~/Images/a6c2e03d5bf09cdb560e374b4b53b978.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <h4>Läs</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4  d-flex justify-content-center">
+                    <div class="gradient3 bg-secondary w-50 d-flex justify-content-center flex-column align-items-center p-3">
+                        <img class="rounded-circle pb-2" src="~/Images/one-continuous-line-drawing-of-a-library-patrons-return-books-to-bookshelves-vector.jpg" alt="Generic placeholder image" width="140" height="140">
+                    <h4>Lämna tillbaka</h4>
+                    </div>
+                    </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-5 mt-4" style="flex-direction: column;">
+                <div><h5>Precis som på ett fysiskt bibliotek, fast med bekvämligheten i ditt eget hem.</h5></div>
+                <div><h5>Låna, läs, lämna tillbaka och repetera.</h5></div>
+                <div><h5>Lättare blir det inte!</h5></div>
+            </div>
+        </div>
+        <!-- FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette d-flex justify-content-center">
+            <div class="col-md-7 align-self-center">
+                <h2 class="featurette-heading">E som i Ekologisk<span class="text-muted"> Läs samvetslöst!</span></h2>
+                <p class="lead">
+                    Här på E-library är det ekologiska fotavtrycket nästintill obefintligt. Våra E-böcker är 100% pappersfria = noll avverkning i våra svenska urskogar, det kallar vi progressivt!
+                    Njut av läsning utan dåligt samvete hos oss på E-library
+                    
+                </p>
+                    <a class="btn btn-success mt-2" asp-area="" asp-controller="Home" asp-action="Sustainability">Läs mer om gröna böcker!</a>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" src="~/Images/pexels-airin-party-252379-767240.jpg" alt="Gröna växter som gror">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2 align-self-center">
+                <h2 class="featurette-heading">Saknar vi något?<span class="text-muted"> Ladda upp en egen bok!</span></h2>
+                <p class="lead">
+                    Här på E-library kan du som kund själv ladda upp dina favoritböcker! Som medlem är det enkelt att fylla på biblioteket med det du tycker saknas, på detta sätt vidgar vi biblioteket för alla smaker.
+                    Så vad väntar du på? Ladda upp en bok idag!
+                </p>
+                <a class="btn btn-primary mt-2" asp-area="Identity" asp-page="/Account/Register">Logga in för att testa!</a>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="featurette-image img-fluid mx-auto" src="~/Images/pexels-nietjuh-796603.jpg" alt="En person som skriver i en bok">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette pb-5">
+            <div class="col-md-7 align-self-center">
+                <h2 class="featurette-heading">Avskyr du att läsa? <span class="text-muted">Vilken tur!</span></h2>
+                <p class="lead">På E-library har vi bara böcker utan innehåll. Ta dig igenom en bok på nolltid genom att bara läsa titeln och en kort beskrivning! För en snabbare och mer effektiv vardag med E-library.</p>
+                <a class="btn btn-info mt-2" asp-area="" asp-controller="Books" asp-action="Index">Bläddra bland tusentals* böcker!</a>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" src="~/Images/pexels-olly-3767411.jpg" alt="En uppgiven flicka med en bok">
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<string>
+
+<h2>Genrer</h2>
+
+<div class="btn-group" role="group" aria-label="Genrer">
+    @foreach (var genre in Model)
+    {
+        <a href="@Url.Action("BooksByGenre", "Books", new { genre = genre })" class="btn btn-primary">@genre</a>
+    }
+</div>

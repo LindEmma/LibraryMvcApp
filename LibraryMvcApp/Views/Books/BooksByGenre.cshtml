@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Book>
+
+<h2>Böcker i denna genre</h2>
+
+@foreach (var book in Model)
+{
+    <div>
+        <h4>@book.BookName</h4>
+        <!-- Visa övrig information om boken -->
+    </div>
+}

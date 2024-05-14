@@ -1,0 +1,34 @@
+﻿@model List<BookLoan>
+
+<h1>Alla boklån</h1>
+
+@if (Model.Count == 0)
+{
+    <p>Det finns inga boklån än</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Utlåningsdatum</th>
+                <th>Sista återlämningsdatum</th>
+                <th>Status</th>
+                <th>Lånad av</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model)
+            {
+                <tr>
+                    <td>@loan.Book.BookName</td>
+                    <td>@loan.LoanDate.ToShortDateString()</td>
+                    <td>@loan.LastLoanDate.ToShortDateString()</td>
+                    <td>@loan.LoanStatus.ToString()</td>
+                    <td>@loan.Customer.CustomerFullName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
