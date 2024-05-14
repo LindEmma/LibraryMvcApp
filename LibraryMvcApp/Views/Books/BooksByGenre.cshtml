@@ -1,11 +1,29 @@
 ﻿@model IEnumerable<Book>
 
-<h2>Böcker i denna genre</h2>
-
+<h2 class="m-3">Böcker i denna genre</h2>
+<br />
+<div class="d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-wrap justify-content-center bookCard">
 @foreach (var book in Model)
 {
     <div>
-        <h4>@book.BookName</h4>
-        <!-- Visa övrig information om boken -->
+        <div class="card m-2 m-3" style="width: 18rem;">
+            <div class="card-header">
+                <h5 class="card-title">@book.BookName</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@book.Author</h6>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text">@book.BookDescription</p>
+                <div class="flex-fill"></div>
+                <p class="card-text text-muted mt-auto text-end">@book.Genre</p>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <a class="btn btn-info text-end" asp-action="Details" asp-route-id="@book.BookId">Mer information</a>
+            </div>
+        </div>
     </div>
 }
+</div>
+</div>
+<br />
+<a class="btn btn-primary" asp-action="Index">Tillbaka</a>

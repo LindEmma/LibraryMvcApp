@@ -30,3 +30,12 @@ body {
 .gradient3 {
     background: linear-gradient(to bottom,#F4ACA4, #F6D78D);
 }
+.bookCard{
+    width: 75%;
+}
+@media screen and (max-width: 1500px) 
+{
+    .bookCard{
+        width: 90%
+    }
+}

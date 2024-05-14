@@ -4,69 +4,61 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="m-5">
+    <div class="text-center mb-3">
+        <h1>Alla böcker</h1>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-info" asp-action="Create">Lägg till en bok</a>
+        }
+        else
+        {
+            <a class="btn btn-primary mt-2" asp-area="Identity" asp-page="/Account/Register">Logga in för att låna, redigera och lägga till böcker!</a>
+        }
+    </div>
+    <br />
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-wrap justify-content-center bookCard">
+            @foreach (var item in Model)
+            {
+                <div class="card m-2 m-3" style="width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">@item.BookName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Author</h6>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text">@item.BookDescription</p>
+                        <div class="flex-fill"></div>
+                        <p class="card-text text-muted mt-auto text-end">@item.Genre</p>
+                    </div>
+                    <div class="card-footer">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <button class="btn btn-primary" onclick="loanBook(@item.BookId)" @if (!item.InStock)
+                            {
+                                <text>disabled</text>
+                            }   >Låna</button>
+                        }
+                        <a class="btn btn-info text-end" asp-action="Details" asp-route-id="@item.BookId">Mer information</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Lägg till ny bok</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BookName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ISBN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InStock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseYear)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseYear)
-            </td>
-            <td>
-                    @* @Html.ActionLink("Låna bok", "Create", "BookLoans", new { bookId = item.BookId }, null) *@
-                <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<script>
+    function loanBook(bookId) {
+        $.ajax({
+            url: '/BookLoans/Create',
+            type: 'POST',
+            data: { bookId: bookId },
+            success: function (response) {
+                alert('Boken har lånats!');
+            },
+            error: function () {
+                alert('Något gick fel. Försök igen senare.');
+            }
+        });
+    }
+</script>

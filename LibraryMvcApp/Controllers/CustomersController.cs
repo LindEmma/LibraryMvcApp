@@ -30,13 +30,12 @@ namespace LibraryMvcApp.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    // Användaren är inloggad, navigera tillbaka till ursprungsplatsen eller en annan sida
+
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return View(model);
             }
-            // Om något är fel med modellen, returnera tillbaka inloggningsvyn med felmeddelanden
             return View(model);
         }
         [HttpPost]
@@ -58,8 +57,6 @@ namespace LibraryMvcApp.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
         public IActionResult Index()

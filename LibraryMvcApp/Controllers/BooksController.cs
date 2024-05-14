@@ -22,12 +22,12 @@ namespace LibraryMvcApp.Controllers
 
         public IActionResult Categories()
         {
-            var genres = _context.Books.Select(b => b.Genre).Distinct().ToList(); // Hämta alla unika genrer från böckerna
+            var genres = _context.Books.Select(b => b.Genre).Distinct().ToList(); // collects all different genres
             return View(genres);
         }
         public IActionResult BooksByGenre(string genre)
         {
-            var booksInGenre = _context.Books.Where(b => b.Genre == genre).ToList(); // Hämta böcker för den valda genren
+            var booksInGenre = _context.Books.Where(b => b.Genre == genre).ToList(); // Collects books for a chosen genre
             return View(booksInGenre);
         }
 

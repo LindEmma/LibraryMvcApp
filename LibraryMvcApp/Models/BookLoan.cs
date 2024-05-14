@@ -15,7 +15,7 @@ namespace LibraryMvcApp.Models
         [Key]
         public int BookLoanId { get; set; }
         [ForeignKey("Customer")]
-        public string CustomerId { get; set; }
+        public string? CustomerId { get; set; }
         [Display(Name = "Låntagare")]
         public Customer? Customer { get; set; }
         [ForeignKey("Book")]
@@ -64,17 +64,6 @@ namespace LibraryMvcApp.Models
             else
             {
                 LoanStatus = LoanStatus.Utlånad;
-            }
-        }
-        public void UpdateBookStock()
-        {
-            if (LoanStatus == LoanStatus.Utlånad || LoanStatus == LoanStatus.Sen)
-            {
-                Book.InStock = false;
-            }
-            else
-            {
-                Book.InStock = true;
             }
         }
     }

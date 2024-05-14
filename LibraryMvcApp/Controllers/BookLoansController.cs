@@ -22,9 +22,11 @@ namespace LibraryMvcApp.Controllers
             return View();
         }
         // GET:
-        public async Task<IActionResult> AllLoans()
+        public async Task<IActionResult> AllLoans() //shows all loans
         {
             var allLoans = await _context.BookLoans
+                .Include(b => b.Book)
+                .Include(c => c.Customer)
                  .OrderBy(c => c.LoanDate)
                  .ToListAsync();
 
@@ -39,67 +41,73 @@ namespace LibraryMvcApp.Controllers
         }
 
         //GET:
-        public async Task<IActionResult> MyLoans()
+        [Authorize]
+        public async Task<IActionResult> MyLoans() //shows the logged in users loans
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Hämta användarens ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var myLoans = await _context.BookLoans
-                                      .Include(bl => bl.Book) // Inkludera Book-egenskapen
+                                      .Include(bl => bl.Book)
                                       .Where(b => b.CustomerId == userId)
-                                      .ToListAsync(); // Filtrera boklån för den aktuella användaren
+                                      .ToListAsync();
             return View(myLoans);
         }
+
         //[HttpGet]
         public IActionResult Create()
         {
-            //// Kolla om ViewBag redan innehåller bokdata
-            //if (ViewBag.Books == null)
-            //{
-            //    // Hämta en lista över alla böcker och fyll ViewBag med dem
-            //    var books = _context.Books.ToList();
-            //    ViewBag.Books = books;
-            //}
-
             ViewData["BookId"] = new SelectList(_context.Books, "BookId", "BookName");
 
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int bookId, BookLoan bookLoan)
+        public async Task<IActionResult> Create(int bookId) //creates book loan
         {
-            if (ModelState.IsValid)
+            //creates new book loan for logged in user
+            var bookLoan = new BookLoan
             {
-                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                BookId = bookId,
+                CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                LoanDate = DateTime.Now,
+                LastLoanDate = DateTime.Now.AddDays(30),
+                LoanStatus = LoanStatus.Utlånad
+            };
+            var book = await _context.Books.FindAsync(bookId);
 
-                var book = await _context.Books.FirstOrDefaultAsync(b => b.BookId == bookId);
-
-                if (book == null)
-                {
-                    return NotFound();
-                }
-
-                //Sätt egenskaper för BookLoan-objektet
-                bookLoan.BookId = bookId;
-                //bookLoan.CustomerId = userId;
-                //bookLoan.LoanDate = DateTime.Now;
-                //bookLoan.LastLoanDate = DateTime.Now.AddDays(30); // Exempelvis 30 dagar från utlåningsdatumet
-
-                // Lägg till och spara i databasen
-                _context.Add(bookLoan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(MyLoans));
-
+            if (book != null) //changes the books stock info when a loan is made
+            {
+                book.InStock = false;
             }
 
-            //if (ViewBag.Books == null)
-            //{
-            //    var books = _context.Books.ToList();
-            //    ViewBag.Books = books;
-            //}
+            _context.BookLoans.Add(bookLoan);
+            await _context.SaveChangesAsync();
 
-            ViewData["BookId"] = new SelectList(_context.Books, "BookId", "BookName");
-            return View(bookLoan);
+            return RedirectToAction("Index", "Books");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReturnBook(int id) //adds a return date to book loan
+        {
+            var bookLoan = await _context.BookLoans.FindAsync(id);
+
+            if (bookLoan == null)
+            {
+                return NotFound();
+            }
+
+            bookLoan.ReturnDate = DateTime.Now;
+
+            bookLoan.UpdateLoanStatus();
+
+            var book = await _context.Books.FindAsync(bookLoan.BookId);
+            if (book != null) // book is now in stock!
+            {
+                book.InStock = true;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(MyLoans));
         }
     }
 }

@@ -1,32 +1,72 @@
 ﻿@model List<BookLoan>
+<div class="p-5">
 
 <h1>Mina lån</h1>
-
+<br />
 @if (Model.Count == 0)
 {
     <p>Du har inga lån för närvarande.</p>
 }
 else
 {
-    <table class="table">
+    <h2>Aktiva lån</h2>
+        
+    <table class="table table-hover mt-2">
         <thead>
             <tr>
-                <th>Titel</th>
+                <th>Boktitel</th>
                 <th>Utlåningsdatum</th>
                 <th>Sista återlämningsdatum</th>
                 <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var loan in Model)
+            @foreach (var loan in Model.Where(l => l.ReturnDate == null))
             {
                 <tr>
                     <td>@loan.Book.BookName</td>
                     <td>@loan.LoanDate.ToShortDateString()</td>
                     <td>@loan.LastLoanDate.ToShortDateString()</td>
                     <td>@loan.LoanStatus.ToString()</td>
+                    <td>
+                        @if (loan.ReturnDate == null)
+                        {
+                            <form asp-action="ReturnBook" class="d-inline-block" asp-route-id="@loan.BookLoanId" method="post">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Är du säker på att du vill lämna tillbaka boken?');">Lämna tillbaka</button>
+                            </form>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+    <br />
+    <h2>Tidigare lån</h2>
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Utlåningsdatum</th>
+                <th>Sista återlämningsdatum</th>
+                <th>Status</th>
+                <th>Återlämnad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model.Where(l => l.ReturnDate != null))
+            {
+                <tr>
+                    <td>@loan.Book.BookName</td>
+                    <td>@loan.LoanDate.ToShortDateString()</td>
+                    <td>@loan.LastLoanDate.ToShortDateString()</td>
+                    <td>@loan.LoanStatus.ToString()</td>
+                    <td>@loan.ReturnDate.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+      
 }
+
+</div>

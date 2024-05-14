@@ -2,6 +2,9 @@ using LibraryMvcApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
+// Emma Lind .NET23 Labb4 
+
 namespace LibraryMvcApp
 {
     public class Program
@@ -20,17 +23,21 @@ namespace LibraryMvcApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
-            //??????????????????????????????
-            builder.Services.ConfigureApplicationCookie(option => //konfigurerar om cookie options, leder rätt om anv klistrar in url den inte kommer åt
+
+            builder.Services.ConfigureApplicationCookie(option =>
             {
                 option.LoginPath = $"/Identity/Account/Login";
                 option.LogoutPath = $"/Identity/Account/Logout";
                 option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
-            builder.Services.AddRazorPages(); //berättar att du anv razorpages (i account/login)
-
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
+
+            if (args.Length == 1 && args[0].ToLower() == "seeddata")
+            {
+                Seed.SeedData(app);
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -40,7 +47,7 @@ namespace LibraryMvcApp
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
                 app.UseHsts();
             }
 

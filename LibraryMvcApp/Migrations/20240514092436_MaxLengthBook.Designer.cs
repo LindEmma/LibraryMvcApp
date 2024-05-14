@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LibraryMvcApp.Data.Migrations
+namespace LibraryMvcApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240511184203_CustomerFix2")]
-    partial class CustomerFix2
+    [Migration("20240514092436_MaxLengthBook")]
+    partial class MaxLengthBook
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,8 +39,8 @@ namespace LibraryMvcApp.Data.Migrations
                         .HasColumnType("nvarchar(65)");
 
                     b.Property<string>("BookDescription")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("BookName")
                         .IsRequired()
@@ -54,8 +54,8 @@ namespace LibraryMvcApp.Data.Migrations
 
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");

@@ -3,11 +3,10 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
+<div class="p-5">
+<h1>Detaljer</h1>
 
 <div>
-    <h4>Book</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -55,6 +54,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.BookId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.BookId">Redigera</a> 
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model?.BookId">Radera</a>
+    }
+    <a class="btn btn-primary" asp-action="Index">Tillbaka</a>
+</div>
 </div>

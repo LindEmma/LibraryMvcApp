@@ -15,17 +15,16 @@ namespace LibraryMvcApp.Data
 
                 context.Database.Migrate();
 
-                //Makes sure the tables are filled in the right order, due to their relationship keys
                 SeedBooks(context);
             }
         }
         //method to seed books to database
         private static void SeedBooks(ApplicationDbContext context)
         {
-            //adds the books only if the table is empty
+            //adds the books if the table is empty
             if (!context.Books.Any())
             {
-                context.Books.AddRange(new List<Book>()
+                var books = new List<Book>
                 {
                 // Skönlitteratur
                 new Book
@@ -281,7 +280,8 @@ namespace LibraryMvcApp.Data
                         InStock = true,
                         ISBN = "9789127064092"
                     }
-                });
+                };
+                context.Books.AddRange(books);
                 context.SaveChanges();
             }
         }

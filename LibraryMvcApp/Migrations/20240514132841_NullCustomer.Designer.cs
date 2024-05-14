@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LibraryMvcApp.Data.Migrations
+namespace LibraryMvcApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240510082950_3")]
-    partial class _3
+    [Migration("20240514132841_NullCustomer")]
+    partial class NullCustomer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,8 +39,8 @@ namespace LibraryMvcApp.Data.Migrations
                         .HasColumnType("nvarchar(65)");
 
                     b.Property<string>("BookDescription")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("BookName")
                         .IsRequired()
@@ -54,8 +54,8 @@ namespace LibraryMvcApp.Data.Migrations
 
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
@@ -80,7 +80,6 @@ namespace LibraryMvcApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CustomerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("LastLoanDate")
@@ -324,9 +323,6 @@ namespace LibraryMvcApp.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("Customer");
                 });
 
@@ -340,9 +336,7 @@ namespace LibraryMvcApp.Data.Migrations
 
                     b.HasOne("LibraryMvcApp.Models.Customer", "Customer")
                         .WithMany("BookLoans")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Book");
 

@@ -3,19 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LibraryMvcApp.Models
 {
-    public class Customer : IdentityUser
+    public class Customer : IdentityUser //customer inherits properties from IdentityUser
     {
-        //[Key]
-        //public int CustomerId { get; set; }
         [Required]
         [MaxLength(150)]
         [Display(Name = "Låntagare")]
         public string? CustomerFullName { get; set; } = String.Empty;
 
-        //[EmailAddress(ErrorMessage = "Invalid email address")]
-        //[Required(ErrorMessage = "Email is required")]
-        //public string Email { get; set; }
-        //public string PasswordHash { get; set; }
         [Display(Name = "Lånehistorik")]
         public List<BookLoan>? BookLoans { get; set; }
 
